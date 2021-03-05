@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "FindPetFriendsClient"
+  "defaultProject": "FindPetFriendsClient",
+  "cli": {
+    "analytics": false
+  }
 }
