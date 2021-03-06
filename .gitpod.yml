@@ -9,10 +9,11 @@ tasks:
       nvm use 14.15.1
       export NG_CLI_ANALYTICS=ci
       npm install -g @angular/cli@11.0.7
+      npm install -g http-server
       cd FindPetFriendsClient/
       npm install
     command: |
-      ng serve -o
+      npm run start:prod
 github:
   prebuilds:
     # enable for the master/default branch (defaults to true)
