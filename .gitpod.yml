@@ -10,6 +10,7 @@ tasks:
       export NG_CLI_ANALYTICS=ci
       npm install -g @angular/cli@11.0.7
       npm install -g http-server
+      npm i @bit/cagdas.pwaextendedcomponentscollection.pwa-header --save
       cd FindPetFriendsClient/
       npm install
     command: |
