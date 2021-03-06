@@ -8,8 +8,12 @@ import { SwUpdate } from '@angular/service-worker';
 })
 export class AppComponent implements OnInit {
   title = 'FindPetFriendsClient';
-
-  constructor(private swUpdate : SwUpdate){}
+  promptEvent :any;
+  constructor(private swUpdate : SwUpdate){
+    window.addEventListener('beforeinstallprompt', event => {
+      this.promptEvent = event;
+    });
+  }
 
   ngOnInit(): void {
     if (this.swUpdate.isEnabled) {
@@ -20,4 +24,9 @@ export class AppComponent implements OnInit {
       });
     }
   }
+
+  installPwa(): void {
+    this.promptEvent.prompt();
+  }
+
 }

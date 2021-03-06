@@ -1,3 +1,6 @@
+<h1>----------------V2---------------</h1>
 <app-pwa-header></app-pwa-header>
-V1
+<button *ngIf="promptEvent" (click)="installPwa()">
+  Install
+</button>
 <router-outlet></router-outlet>
