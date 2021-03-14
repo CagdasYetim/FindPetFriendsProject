@@ -9,7 +9,11 @@ import { SwUpdate } from '@angular/service-worker';
 export class AppComponent implements OnInit {
   title = 'FindPetFriendsClient';
   promptEvent :any;
+  items: {name:string,url?:string}[] = [];
+
   constructor(private swUpdate : SwUpdate){
+    this.items.push({name:"HOME",url:"/home"});
+    this.items.push({name:"PROFILE",url:"/profile"});
     window.addEventListener('beforeinstallprompt', event => {
       this.promptEvent = event;
     });
