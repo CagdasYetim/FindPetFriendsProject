@@ -12,8 +12,10 @@ export class AppComponent implements OnInit {
   items: {name:string,url?:string}[] = [];
 
   constructor(private swUpdate : SwUpdate){
-    this.items.push({name:"HOME",url:"/home"});
+    this.items.push({name:"HOME",url:"/error-page"});
     this.items.push({name:"PROFILE",url:"/profile"});
+    this.items.push({name:"REGISTER",url:"/register"});
+    this.items.push({name:"LOGIN",url:"/login"});
     window.addEventListener('beforeinstallprompt', event => {
       this.promptEvent = event;
     });
@@ -27,6 +29,7 @@ export class AppComponent implements OnInit {
           }
       });
     }
+
   }
 
   installPwa(): void {

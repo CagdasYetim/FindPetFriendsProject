@@ -1,11 +1,16 @@
-<h1 style="margin-top:4rem;">----------------V1---------------</h1>
+
 <app-pwa-header [navItems]="items">
   <div logo>this my logo</div>
   <div icon>this is my icons</div>
 </app-pwa-header>
 
+
+
 <button *ngIf="promptEvent" (click)="installPwa()">
   Install
 </button>
 
-<router-outlet></router-outlet>
+<div style="margin-top:5rem;">
+  <app-toasts></app-toasts>
+  <router-outlet></router-outlet>
+</div>
