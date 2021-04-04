@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { FormModel } from './../models/formModel';
 import { AccountService } from './../services/account.service';
 import { FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -8,27 +10,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  componentController!: {
-    head?:string ,
-    buttonName:string,
-    buttonMethod() : any[],
-    fields : {
-      fieldName:string,
-      label:string,
-      isRequired:boolean,
-      placeholder?:string,
-      control:FormControl,
-      errorMessage?:string,
-      fieldType?:string
-    }[],
-    links?:{
-      url:string,
-      linkName:string,
-      color?:string
-    }[]
-  };
 
-  constructor(private accountService : AccountService) { }
+  componentController!: FormModel;
+
+  constructor(private accountService : AccountService,private router: Router) { }
 
   ngOnInit(): void {
     this.componentController = {
@@ -59,12 +44,12 @@ export class LoginComponent implements OnInit {
   login(object:{fieldName:string,fieldValue:string}[]){
     let model :any = {} ;
     object.forEach(item => model[item.fieldName] = item.fieldValue);
-    this.accountService.login(model).subscribe(response => {
-      //this.router.navigateByUrl('/members');
+    this.router.navigateByUrl('/events');
+    /* this.accountService.login(model).subscribe(response => {
       console.log(response);
     }, error => {
       console.log(error);
-    });
+    }); */
   }
 
 }

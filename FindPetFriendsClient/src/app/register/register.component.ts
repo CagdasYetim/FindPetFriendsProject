@@ -1,7 +1,9 @@
+import { FormModel } from './../models/formModel';
 import { ToastService } from './../services/toast.service';
 import { AccountService } from './../services/account.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,29 +12,12 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
 
-  componentController!: {
-    head?:string ,
-    buttonName:string,
-    buttonMethod() : any[],
-    fields : {
-      fieldName:string,
-      label:string,
-      isRequired:boolean,
-      placeholder?:string,
-      control:FormControl,
-      errorMessage?:string,
-      fieldType?:string
-    }[],
-    links?:{
-      url:string,
-      linkName:string,
-      color?:string
-    }[]
-  };
+  componentController!: FormModel;
 
   constructor(
     private accountService : AccountService,
-    private toastService: ToastService) { }
+    private toastService: ToastService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.componentController = {
@@ -64,15 +49,15 @@ export class RegisterComponent implements OnInit {
     let model :any = {} ;
     object.forEach(item => model[item.fieldName] = item.fieldValue);
 
-    this.toastService.show('I am a success toast', {
+    this.toastService.show('You have been successfully registered', {
       classname: 'bg-success text-light',
       delay: 2000 ,
       autohide: true,
       headertext: 'Toast Header'
     });
-
+    this.router.navigateByUrl('/events');
     /* this.accountService.register(model).subscribe(response => {
-      //this.router.navigateByUrl('/members');
+      this.router.navigateByUrl('/profile');
       console.log(response);
     }, error => {
       console.log(error);

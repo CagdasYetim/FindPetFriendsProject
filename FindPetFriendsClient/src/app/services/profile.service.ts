@@ -8,4 +8,9 @@ export class ProfileService {
 
   baseUrl = environment.apiUrl;
   constructor() { }
+
+  //http request
+  saveProfileSettings(model:{}){
+    console.log(model);
+  }
 }

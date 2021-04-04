@@ -1,3 +1,4 @@
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -19,9 +20,16 @@ import { ToastComponent } from './toast/toast.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PwaCheckboxesModule } from '@bit/cagdas.pwaextendedcomponentscollection.pwa-checkboxes';
 import { PwaImageModule } from '@bit/cagdas.pwaextendedcomponentscollection.pwa-image';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { PwaAutoinputModule } from '@bit/cagdas.pwaextendedcomponentscollection.pwa-autoinput';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import { PwaFloatbuttonModule } from '@bit/cagdas.pwaextendedcomponentscollection.pwa-floatbutton';
+import { DialogComponent } from './dialog/dialog.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {MatInputModule} from '@angular/material/input';
+import { EventsComponent } from './events/events.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +39,9 @@ import { PwaAutoinputModule } from '@bit/cagdas.pwaextendedcomponentscollection.
     HomeComponent,
     LoginComponent,
     ToastComponent,
-    ProfileComponent
+    ProfileComponent,
+    DialogComponent,
+    EventsComponent
   ],
   imports: [
     BrowserModule,
@@ -45,11 +55,24 @@ import { PwaAutoinputModule } from '@bit/cagdas.pwaextendedcomponentscollection.
     PwaAutoinputModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDialogModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    PwaFloatbuttonModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     NgbModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    }
+ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

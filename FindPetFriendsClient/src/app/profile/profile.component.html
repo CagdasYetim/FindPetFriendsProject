@@ -12,9 +12,12 @@
     </div>
     <h3>Which breeds can join to me</h3>
 
-    <app-pwa-autoinput [label]="'enjoy to me'" [list]="toList" [placeholder]="'enjoy to me '"  (result)="addEnjoyToMeResults($event)" ></app-pwa-autoinput>
+    <app-pwa-autoinput [label]="'join to me'" [list]="toList" [placeholder]="'join to me '"  (result)="addJoinToMeResults($event)" ></app-pwa-autoinput>
     <div class="profile__label-contailer">
       <label *ngFor="let join of joinToMeList" (click)="removeJoin(join)" class="profile__label">{{join}}</label>
+    </div>
+    <div class="profile__save">
+      <button type="button"  mat-raised-button color="primary" (click)="saveProfile()" >save</button>
     </div>
   </div>
 

@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{data.name}}</h1>
+<div mat-dialog-content>
+  <p>{{data.text}}</p>
+  <mat-form-field *ngFor="let e of data.inputs">
+    <mat-label>{{e.label}}</mat-label>
+    <input [type]="e.type" matInput [(ngModel)]="e.data">
+  </mat-form-field>
+  <ng-content select="[dialogHook]"></ng-content>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="primary" (click)="onNoClick()">{{data.buttonCloseLabel}}</button>
+  <button mat-button color="primary" [mat-dialog-close]="data.inputs" cdkFocusInitial>{{data.buttonOkLabel}}</button>
+</div>
