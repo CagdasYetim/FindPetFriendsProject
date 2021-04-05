@@ -44,7 +44,7 @@ export class EventsComponent implements OnInit {
     this.cartController = {
       headerTitle:"CartTitle",
       avatarImage:"../../assets/favicon-96x96.png",
-      headerSubTitle : "this is a fucking sub title",
+      headerSubTitle : "this is a subtitle",
       content : "this is a abuk sabuk content this is a abuk sabuk content this is a abuk sabuk content this is a abuk sabuk content",
       buttons : [
         {
