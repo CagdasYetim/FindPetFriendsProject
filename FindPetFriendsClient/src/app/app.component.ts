@@ -86,10 +86,10 @@ export class AppComponent implements OnInit {
       buttonOkLabel : "create",
       buttonCloseLabel : "cancel",
       inputs : [
-        {label:"Name",type : "text",data : ""},
-        {label : "Date",type : "datetime-local",data : ""},
-        {label : "From",type : "text",data : ""},
-        {label : "To",type : "text",data : ""}
+        {label:"Name",mapEnable:false, type : "text",data : ""},
+        {label : "Date",mapEnable:false,type : "datetime-local",data : ""},
+        {label : "From",mapEnable:true,type : "text",data : ""},
+        {label : "To",mapEnable:true,type : "text",data : ""}
       ]
     };
   }

@@ -4,5 +4,5 @@ export interface DialogModel {
   name: string,
   buttonCloseLabel: string,
   buttonOkLabel: string,
-  inputs: { type: string, label: string, data: any }[]
+  inputs: { type: string,mapEnable:boolean, label: string, data: any }[]
 }

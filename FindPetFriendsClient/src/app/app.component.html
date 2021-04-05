@@ -10,11 +10,12 @@
 
 
 
-<button *ngIf="promptEvent" (click)="installPwa()">
-  Install
-</button>
+
 
 <div style="margin-top:5rem;">
+  <button *ngIf="promptEvent" (click)="installPwa()">
+    Install
+  </button>
   <app-pwa-floatbutton (click)="clickFloat()"></app-pwa-floatbutton>
   <app-toasts></app-toasts>
   <router-outlet></router-outlet>

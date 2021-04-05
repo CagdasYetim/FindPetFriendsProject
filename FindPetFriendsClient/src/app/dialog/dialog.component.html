@@ -2,6 +2,11 @@
 <div mat-dialog-content>
   <p>{{data.text}}</p>
   <mat-form-field *ngFor="let e of data.inputs">
+    <div style="margin:1rem;" *ngIf="e.mapEnable">
+      <agm-map style="height:100px;" [latitude]="48.210033" [longitude]="16.363449" (mapClick)="mapClickEvent($event,e)">
+
+      </agm-map>
+    </div>
     <mat-label>{{e.label}}</mat-label>
     <input [type]="e.type" matInput [(ngModel)]="e.data">
   </mat-form-field>

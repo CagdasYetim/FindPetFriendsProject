@@ -30,6 +30,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import { EventsComponent } from './events/events.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,9 @@ import { EventsComponent } from './events/events.component';
     MatButtonModule,
     MatButtonToggleModule,
     PwaFloatbuttonModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBcFpvV5mW2d5a1qLlo2noOkVQZgzpe4pw'
+    }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     NgbModule
