@@ -11,7 +11,8 @@
         "/*.js"
       ]
     }
-  }, {
+  },
+  {
     "name": "assets",
     "installMode": "lazy",
     "updateMode": "prefetch",
@@ -20,5 +21,19 @@
         "/assets/**"
       ]
     }
-  }]
+  }],
+  "dataGroups": [
+    {
+      "name": "Weather",
+      "urls": [
+        "/WeatherForecast"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "timeout":"10s",
+        "maxAge": "1d",
+        "maxSize": 100
+      }
+    }
+  ]
 }

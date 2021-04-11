@@ -55,13 +55,21 @@ export class RegisterComponent implements OnInit {
       autohide: true,
       headertext: 'Toast Header'
     });
-    this.router.navigateByUrl('/events');
-    /* this.accountService.register(model).subscribe(response => {
-      this.router.navigateByUrl('/profile');
+    this.accountService.mock().subscribe(
+      response =>{
+        console.log(response);
+      },
+      error =>{
+        console.log(error);
+      }
+    );
+    /* this.router.navigateByUrl('/events'); */
+    this.accountService.register(model).subscribe(response => {
+      /* this.router.navigateByUrl('/profile'); */
       console.log(response);
     }, error => {
       console.log(error);
-    }); */
+    });
   }
 
 }
