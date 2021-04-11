@@ -1,0 +1,17 @@
+.icon{
+  margin : 0px 0.5rem;
+  fill:black;
+  &:hover{
+    fill:white;
+  }
+}
+
+.header-icon{
+  width: 3rem;
+}
+
+@media screen and (max-width: 500px) {
+  .icon{
+    margin : 0px 0.25rem;
+  }
+}

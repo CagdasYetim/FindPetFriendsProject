@@ -1,0 +1,32 @@
+$color-secondary-light: #ffb900;
+$color-secondary-dark: #ff7730;
+
+.profile{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  &__label{
+    margin : 0.5rem;
+    padding : 0.4rem;
+    border-radius: 5rem;
+    background-image: radial-gradient($color-secondary-light, $color-secondary-dark);
+  }
+
+  &__img{
+    flex : 1;
+  }
+
+  &__all{
+    flex : 2;
+  }
+
+  @media screen and (max-width: 500px) {
+    display: block;
+  }
+
+  &__save{
+    text-align: left;
+  }
+
+}

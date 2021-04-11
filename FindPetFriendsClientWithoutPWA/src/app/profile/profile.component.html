@@ -1,0 +1,24 @@
+<div class="profile" >
+  <app-pwa-image class="profile__img" [imgController]="imgController"></app-pwa-image>
+
+  <div class="profile__all">
+    <app-pwa-checkboxes class="profile__checkboxes" [taskController]="checkboxTaskController" ></app-pwa-checkboxes>
+
+    <h3>Which breed i have</h3>
+    <app-pwa-autoinput [label]="'i have a'" [list]="toList" [placeholder]="'I have a '"  (result)="addIHaveResults($event)" ></app-pwa-autoinput>
+
+    <div class="profile__label-contailer">
+      <label *ngFor="let ihave of iHaveList" (click)="removeIHave(ihave)" class="profile__label">{{ihave}}</label>
+    </div>
+    <h3>Which breeds can join to me</h3>
+
+    <app-pwa-autoinput [label]="'join to me'" [list]="toList" [placeholder]="'join to me '"  (result)="addJoinToMeResults($event)" ></app-pwa-autoinput>
+    <div class="profile__label-contailer">
+      <label *ngFor="let join of joinToMeList" (click)="removeJoin(join)" class="profile__label">{{join}}</label>
+    </div>
+    <div class="profile__save">
+      <button type="button"  mat-raised-button color="primary" (click)="saveProfile()" >save</button>
+    </div>
+  </div>
+
+</div>

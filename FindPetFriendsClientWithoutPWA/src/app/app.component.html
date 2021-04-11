@@ -1,0 +1,22 @@
+<app-pwa-header [navItems]="items">
+  <div logo><img class="header-icon" src="../assets/favicon-32x32.png"/></div>
+
+  <div icon>
+    <a class="navigation__link" routerLink="" routerLinkActive="router-link-active"><mat-icon class="icon" svgIcon="home-icon" aria-hidden="false"></mat-icon></a>
+    <a class="navigation__link" routerLink="/profile" routerLinkActive="router-link-active"><mat-icon class="icon"svgIcon="user-icon" aria-hidden="false"></mat-icon></a>
+    <a class="navigation__link" routerLink="/events" routerLinkActive="router-link-active"><mat-icon class="icon" svgIcon="events-icon" aria-hidden="false"></mat-icon></a>
+  </div>
+</app-pwa-header>
+
+
+
+
+
+<div style="margin-top:5rem;">
+  <button *ngIf="promptEvent" (click)="installPwa()">
+    Install
+  </button>
+  <app-pwa-floatbutton (click)="clickFloat()"></app-pwa-floatbutton>
+  <app-toasts></app-toasts>
+  <router-outlet ></router-outlet>
+</div>
