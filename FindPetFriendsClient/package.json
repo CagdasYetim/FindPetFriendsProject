@@ -8,6 +8,7 @@
     "build:prod": "ng build --prod",
     "test": "ng test",
     "start:prod": "ng build --prod && cd dist/FindPetFriendsClient && http-server -c-1 .",
+    "start:prod-server" :"cd dist/FindPetFriendsClient && http-server -c-1 .",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

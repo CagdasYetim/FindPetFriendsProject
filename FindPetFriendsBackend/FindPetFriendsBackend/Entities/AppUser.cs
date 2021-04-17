@@ -16,8 +16,12 @@ namespace API.Entities
         public string Interests { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-
+        public bool ShowName { get; set; }
+        public bool ShowLastLocation { get; set; }
+        public bool SendNotification { get; set; }
+        public ICollection<IHave> IHaves { get; set; }
+        public ICollection<CanJoin> CanJoins { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
-
+        public ICollection<Event> Events { get; set; }
     }
 }

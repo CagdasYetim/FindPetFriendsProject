@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
     );
     /* this.router.navigateByUrl('/events'); */
     this.accountService.register(model).subscribe(response => {
-      /* this.router.navigateByUrl('/profile'); */
+      this.router.navigateByUrl('/profile');
       console.log(response);
     }, error => {
       console.log(error);

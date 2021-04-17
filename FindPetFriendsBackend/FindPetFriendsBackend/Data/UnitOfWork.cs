@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using API.Interfaces;
+using API.Repositories;
 using AutoMapper;
+
 
 namespace API.Data
 {
@@ -14,8 +16,9 @@ namespace API.Data
             _mapper = mapper;
         }
 
-        //public IUserRepository UserRepository => new UserRepository(_context, _mapper);
-
+        public IUserRepository UserRepository => new UserRepository(_context, _mapper);
+        public ICitiesRepository CitiesRepository => new CitiesRepository(_context);
+        public IBreedsRepository BreedsRepository => new BreedsRepository(_context);
 
         public async Task<bool> Complete()
         {

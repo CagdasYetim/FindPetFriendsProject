@@ -77,19 +77,6 @@ namespace API.Controllers
             };
         }
 
-        [HttpGet("mock")]
-        public ICollection<string> mock()
-        {
-            List<string> dinosaurs = new List<string>();
-            dinosaurs.Add("Tyrannosaurus");
-            dinosaurs.Add("Amargasaurus");
-            dinosaurs.Add("Mamenchisaurus");
-            dinosaurs.Add("Deinonychus");
-            dinosaurs.Add("Compsognathus");
-
-            return dinosaurs;
-        }
-
         private async Task<bool> UserExists(string username)
         {
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
