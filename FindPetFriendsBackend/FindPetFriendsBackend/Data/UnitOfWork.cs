@@ -19,6 +19,7 @@ namespace API.Data
         public IUserRepository UserRepository => new UserRepository(_context, _mapper);
         public ICitiesRepository CitiesRepository => new CitiesRepository(_context);
         public IBreedsRepository BreedsRepository => new BreedsRepository(_context);
+        public IEventRepository EventRepository => new EventRepository(_context, _mapper);
 
         public async Task<bool> Complete()
         {

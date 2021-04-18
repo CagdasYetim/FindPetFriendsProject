@@ -1,20 +1,24 @@
-﻿using API.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Entities
+namespace API.DTOs
 {
-    public class Event
+    public class EventDto
     {
-        public int Id { get; set; }
-        public AppUser AppUser { get; set; }
-        public int AppUserId { get; set; }
+        [Required]
+        public string EventOwner { get; set; }
+        [Required]
         public float From { get; set; }
+        [Required]
         public float To { get; set; }
+        [Required]
         public string City { get; set; }
+        [Required]
         public string NameOfEvent { get; set; }
+        [Required]
         public DateTime StartDate { get; set; }
     }
 }

@@ -33,6 +33,13 @@ namespace API.Repositories
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
 
+        public async Task<AppUser> GetUserByUserNameAsyncWithEvent(string username)
+        {
+            return await _context.Users
+                .Include(e => e.Events)
+                .SingleOrDefaultAsync(x => x.UserName == username);
+        }
+
         public void Update(AppUser user)
         {
             _context.Entry(user).State = EntityState.Modified;

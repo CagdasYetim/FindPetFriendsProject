@@ -7,6 +7,7 @@ namespace API.Interfaces
         IUserRepository UserRepository { get; }
         IBreedsRepository BreedsRepository { get; }
         ICitiesRepository CitiesRepository { get; }
+        IEventRepository EventRepository { get; }
 
         Task<bool> Complete();
         bool HasChanges();

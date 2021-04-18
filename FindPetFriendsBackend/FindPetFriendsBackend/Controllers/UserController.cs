@@ -1,5 +1,6 @@
 ﻿using API.Controllers;
 using API.DTOs;
+using API.Entities;
 using API.Extensions;
 using API.Interfaces;
 using AutoMapper;
@@ -44,8 +45,33 @@ namespace API.Controllers
                         }
                     );
             }
-
             return BadRequest();
+        }
+        [HttpPost("create-event")]
+        public async Task<ActionResult<EventDto>> CreateEvent(EventDto eventDto)
+        {
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsyncWithEvent("cagdastest"/*User.GetUsername()*/);
+            var currEvent = _mapper.Map<Event>(eventDto);
+
+            currEvent.AppUser = user;
+            currEvent.AppUserId = user.Id;
+
+            user.Events.Add(currEvent);
+
+            if(await _unitOfWork.Complete())
+            {
+                return Ok(eventDto);
+            }
+
+            return BadRequest(eventDto);
+        }
+        [HttpGet("my-events")]
+        public async Task<ActionResult<IEnumerable<EventDto>>> getMyEvents()
+        {
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsyncWithEvent("cagdastest"/*User.GetUsername()*/);
+            var events = user.Events
+                             .Select(e => _mapper.Map<EventDto>(e));
+            return Ok(events);
         }
 
     }

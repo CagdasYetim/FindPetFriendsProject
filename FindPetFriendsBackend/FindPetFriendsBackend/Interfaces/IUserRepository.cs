@@ -11,5 +11,6 @@ namespace API.Interfaces
         void Update(AppUser user);
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByUsernameAsync(string username);
+        Task<AppUser> GetUserByUserNameAsyncWithEvent(string username);
     }
 }
