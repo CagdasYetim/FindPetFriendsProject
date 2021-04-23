@@ -7,7 +7,7 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent implements OnInit {
-  toList : string[]=[];
+  toList !: string[];
   toFilterList : string[] = [];
   toCities : string[]=[];
   toFilterCities : string[] = [];
@@ -35,7 +35,13 @@ export class EventsComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.toList = this.helperService.getAllBreeds();
+    this.helperService.getAllBreeds()
+    .subscribe(response => {
+      var breeds : any[] = [];
+      breeds = breeds.concat(response);
+      this.toList=[...breeds];
+    });
+
     this.toCities = this.helperService.getAustriaCities();
     this.setCarts();
   }
