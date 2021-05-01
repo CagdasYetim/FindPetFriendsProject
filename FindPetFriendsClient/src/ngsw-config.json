@@ -24,9 +24,33 @@
   }],
   "dataGroups": [
     {
-      "name": "Weather",
+      "name": "Breeds",
       "urls": [
-        "/WeatherForecast"
+        "/api/Breeds/all"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "timeout":"10s",
+        "maxAge": "1d",
+        "maxSize": 100
+      }
+    },
+    {
+      "name": "Cities Of Austria",
+      "urls": [
+        "/api/Cities/all"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "timeout":"10s",
+        "maxAge": "1d",
+        "maxSize": 100
+      }
+    },
+    {
+      "name": "Profile",
+      "urls": [
+        "/api/User/getProfile"
       ],
       "cacheConfig": {
         "strategy": "freshness",
