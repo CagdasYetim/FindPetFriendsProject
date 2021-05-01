@@ -7,7 +7,7 @@
     <div class="events__name">
       <mat-form-field>
         <mat-label>Name</mat-label>
-        <input matInput placeholder = "Name" type="text">
+        <input matInput placeholder = "Name" type="text" [(ngModel)]="name">
       </mat-form-field>
     </div>
     <div class="events__breeds">
@@ -21,74 +21,30 @@
     <div class="events__day">
       <mat-form-field>
         <mat-label>Date</mat-label>
-        <input matInput placeholder = "Choose a Date" type="date">
+        <input matInput placeholder = "Choose a Date" type="date" [ngModel] ="date | date:'yyyy-MM-dd'" (ngModelChange)="date = $event">
       </mat-form-field>
     </div>
     <div class="events__cities" >
-      <app-pwa-autoinput [label]="'Events in Cities'" [list]="toCities" [placeholder]="'Choose a city or cities'" (result)="addCities($event)" ></app-pwa-autoinput>
+      <span *ngIf="toCities">
+        <app-pwa-autoinput [label]="'Events in Cities'" [list]="toCities" [placeholder]="'Choose a city or cities'" (result)="addCities($event)" ></app-pwa-autoinput>
+      </span>
       <div class="events__label-contailer">
         <label *ngFor="let c of toFilterCities" (click)="removeCities(c)" class="events__label">{{c}}</label>
       </div>
     </div>
     <div class="events__button">
-      <button mat-raised-button color="primary" type="button" >filter</button>
+      <button mat-raised-button color="primary" type="button" (click)="getFilteredEvents()">filter</button>
     </div>
   </div>
 
-  <div class="events__events">
-    <app-pwa-cart [cartController]="cartController">
-      <div cardHook><agm-map style="height: 200px;" [latitude]="48.210033" [longitude]="16.363449" >
-        <agm-marker [latitude]="48.210033" [longitude]="16.363449"></agm-marker>
-      </agm-map>
-    </div>
-    </app-pwa-cart>
-    <app-pwa-cart [cartController]="cartController">
-      <div cardHook><agm-map style="height: 200px;" [latitude]="48.210033" [longitude]="16.363449" >
-        <agm-marker [latitude]="48.210033" [longitude]="16.363449"></agm-marker>
-      </agm-map>
-    </div>
-    </app-pwa-cart>
-    <app-pwa-cart [cartController]="cartController">
-      <div cardHook><agm-map style="height: 200px;" [latitude]="48.210033" [longitude]="16.363449" >
-        <agm-marker [latitude]="48.210033" [longitude]="16.363449"></agm-marker>
-      </agm-map>
-    </div>
-    </app-pwa-cart>
-    <app-pwa-cart [cartController]="cartController">
-      <div cardHook><agm-map style="height: 200px;" [latitude]="48.210033" [longitude]="16.363449" >
-        <agm-marker [latitude]="48.210033" [longitude]="16.363449"></agm-marker>
-      </agm-map>
-    </div>
-    </app-pwa-cart>
-    <app-pwa-cart [cartController]="cartController">
-      <div cardHook><agm-map style="height: 200px;" [latitude]="48.210033" [longitude]="16.363449" >
-        <agm-marker [latitude]="48.210033" [longitude]="16.363449"></agm-marker>
-      </agm-map>
-    </div>
-    </app-pwa-cart>
-    <app-pwa-cart [cartController]="cartController">
-      <div cardHook><agm-map style="height: 200px;" [latitude]="48.210033" [longitude]="16.363449" >
-        <agm-marker [latitude]="48.210033" [longitude]="16.363449"></agm-marker>
-      </agm-map>
-    </div>
-    </app-pwa-cart>
-    <app-pwa-cart [cartController]="cartController">
-      <div cardHook><agm-map style="height: 200px;" [latitude]="48.210033" [longitude]="16.363449" >
-        <agm-marker [latitude]="48.210033" [longitude]="16.363449"></agm-marker>
-      </agm-map>
-    </div>
-    </app-pwa-cart>
-    <app-pwa-cart [cartController]="cartController">
-      <div cardHook><agm-map style="height: 200px;" [latitude]="48.210033" [longitude]="16.363449" >
-        <agm-marker [latitude]="48.210033" [longitude]="16.363449"></agm-marker>
-      </agm-map>
-    </div>
-    </app-pwa-cart>
-    <app-pwa-cart [cartController]="cartController">
-      <div cardHook><agm-map style="height: 200px;" [latitude]="48.210033" [longitude]="16.363449" >
-        <agm-marker [latitude]="48.210033" [longitude]="16.363449"></agm-marker>
-      </agm-map>
-    </div>
+  <div class="events__events" *ngIf="cartControllers">
+    <app-pwa-cart class="events_card" *ngFor="let elem of cartControllers" [cartController]="elem">
+      <div cardHook>
+        <agm-map style="height: 200px;" [latitude]="elem.from? getLng(elem.from):0" [longitude]="elem.from?getLng(elem.from):0">
+          <agm-marker [latitude]="elem.from? getLng(elem.from):0" [longitude]="elem.from?getLng(elem.from):0"></agm-marker>
+          <agm-marker [latitude]="elem.to? getLng(elem.to):0" [longitude]="elem.to?getLng(elem.to):0"></agm-marker>
+        </agm-map>
+      </div>
     </app-pwa-cart>
   </div>
 </div>

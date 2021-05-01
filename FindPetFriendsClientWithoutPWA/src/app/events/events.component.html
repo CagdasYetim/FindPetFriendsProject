@@ -11,7 +11,9 @@
       </mat-form-field>
     </div>
     <div class="events__breeds">
-      <app-pwa-autoinput [label]="'Events with Breeds'" [list]="toList" [placeholder]="'Events with Breeds '" (result)="addBreeds($event)" ></app-pwa-autoinput>
+      <span *ngIf="toList" >
+        <app-pwa-autoinput [label]="'Events with Breeds'" [list]="toList" [placeholder]="'Events with Breeds '" (result)="addBreeds($event)" ></app-pwa-autoinput>
+      </span>
       <div class="events__label-contailer">
         <label *ngFor="let f of toFilterList" (click)="removeBreeds(f)" class="events__label">{{f}}</label>
       </div>

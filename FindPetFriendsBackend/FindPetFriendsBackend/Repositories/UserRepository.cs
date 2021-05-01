@@ -37,6 +37,8 @@ namespace API.Repositories
         {
             return await _context.Users
                 .Include(e => e.Events)
+                .Include(i => i.IHaves)
+                .Include(c => c.CanJoins)
                 .SingleOrDefaultAsync(x => x.UserName == username);
         }
 

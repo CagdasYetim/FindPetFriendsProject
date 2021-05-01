@@ -17,10 +17,14 @@ namespace API.Services
             User.ShowName = setting.ShowName;
             User.SendNotification = setting.SendNotification;
             User.ShowLastLocation = setting.ShowLastLocation;
+            User.City = setting.City;
 
-            foreach(string elem in setting.IHave)
+           User.IHaves = Enumerable.Empty<IHave>().ToList();
+           User.CanJoins = Enumerable.Empty<CanJoin>().ToList();
+
+
+            foreach (string elem in setting.IHave)
             {
-            
                 if(!IHaveExist(elem,User.IHaves))
                     User.IHaves.Add(new IHave{
                         AppUser = User,

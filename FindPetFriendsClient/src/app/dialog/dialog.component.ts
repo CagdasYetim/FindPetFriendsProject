@@ -22,9 +22,6 @@ export class DialogComponent implements OnInit {
   }
 
   mapClickEvent(event:any,e :any){
-    console.log(event.coords.lat);
-    console.log(event.coords.lng);
     e.data = event.coords.lat + '-' +event.coords.lat;
   }
-
 }

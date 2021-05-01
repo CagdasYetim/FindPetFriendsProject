@@ -1,3 +1,4 @@
+import { ProfileDto } from './../models/profileDto';
 import { HelperService } from './../helpers/helper.service';
 import { ProfileService } from './../services/profile.service';
 import { FormControl } from '@angular/forms';
@@ -17,7 +18,9 @@ export class ProfileComponent implements OnInit {
   iHaveList : string[] = [];
   joinToMeList : string[]=[];
   toList!: string[] ;
-
+  myProfileSettings !: ProfileDto;
+  cities : string [] = [];
+  selectedCity!:string;
 
   imgController!: {
     src: string;
@@ -31,16 +34,11 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private helperService: HelperService,
     private cRef: ChangeDetectorRef
-    ) { }
+    ) {
+      this.getProfileInfo();
+     }
 
   ngOnInit(): void {
-    this.helperService.getAllBreeds()
-        .subscribe(response => {
-          var breeds : any[] = [];
-          breeds = breeds.concat(response);
-          this.toList=[...breeds];
-        });
-
     this.imgController = {
       src : "../../assets/justExample.jpg",
       height: "10rem",
@@ -59,6 +57,22 @@ export class ProfileComponent implements OnInit {
       ]
     };
 
+    this.helperService.getAllBreeds()
+    .subscribe(response => {
+      var breeds : any[] = [];
+      breeds = breeds.concat(response);
+      this.toList=[...breeds];
+    });
+
+    this.helperService.getAustriaCities()
+        .subscribe(
+          response => {
+            this.cities = [...response];
+          },
+          error =>{
+
+          }
+        );
   }
 
   addIHaveResults(object:string){
@@ -79,10 +93,39 @@ export class ProfileComponent implements OnInit {
 
   saveProfile(){
     let model :any = {};
-    model.joinToMe = this.joinToMeList;
+    model.CanJoin = this.joinToMeList;
     model.iHave = this.iHaveList;
+    model.City = this.selectedCity;
     this.checkboxTaskController.subtasks?.forEach(e => model[e.name]=e.completed);
     this.profileService.saveProfileSettings(model);
   }
 
+  getProfileInfo(){
+    this.profileService.getProfile()
+        .subscribe(
+          response=>{
+            this.myProfileSettings = response;
+            this.myProfileSettings.iHave.forEach(e => this.addIHaveResults(e));
+            this.myProfileSettings.canJoin.forEach(e => this.addJoinToMeResults(e));
+            this.selectedCity = response.city;
+            this.checkboxTaskController
+                .subtasks
+                ?.forEach(e => {
+                  if(e.name === 'ShowName'){
+                    e.completed = response.showName;
+                  }
+                  else if(e.name === 'ShowLastLocation'){
+                    e.completed = response.showLastLocation;
+                  }
+                  else if(e.name === 'SendNotification'){
+                    e.completed = response.sendNotification;
+                  }
+                });
+
+          },
+          error =>{
+            console.log(error);
+          }
+        );
+  }
 }

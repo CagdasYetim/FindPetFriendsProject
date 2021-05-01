@@ -3,15 +3,17 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FindPetFriendsBackend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210424190810_EventExtension")]
+    partial class EventExtension
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,8 +246,8 @@ namespace FindPetFriendsBackend.Data.Migrations
                     b.Property<string>("City")
                         .HasColumnType("text");
 
-                    b.Property<string>("From")
-                        .HasColumnType("text");
+                    b.Property<float>("From")
+                        .HasColumnType("real");
 
                     b.Property<string>("NameOfEvent")
                         .HasColumnType("text");
@@ -253,8 +255,8 @@ namespace FindPetFriendsBackend.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("To")
-                        .HasColumnType("text");
+                    b.Property<float>("To")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 

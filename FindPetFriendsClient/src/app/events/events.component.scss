@@ -24,6 +24,11 @@ $color-secondary-dark: #ff7730;
   }
 
   &__events{
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     flex : 1;
   }
 
@@ -33,6 +38,10 @@ $color-secondary-dark: #ff7730;
       display: block;
       width: 100%;
     }
+  }
+
+  &__card{
+    margin-bottom: 2rem;
   }
 
 }

@@ -36,17 +36,39 @@ namespace API.Controllers
             if(await _unitOfWork.Complete())
             {
                 return Ok(
-                        new SettingDto{
+                        new SettingDto {
                             ShowName = user.ShowName,
                             ShowLastLocation = user.ShowLastLocation,
                             SendNotification = user.SendNotification,
+                            City = user.City,
                             IHave = (from ihave in user.IHaves select ihave.Value).ToList(),
                             CanJoin = (from canJoin in user.CanJoins select canJoin.Value).ToList()
                         }
-                    );
+                    ); ;
             }
             return BadRequest();
         }
+
+        [HttpGet("getProfile")]
+        public async Task<ActionResult<SettingDto>> getProfile()
+        {
+            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync("cagdastest"/*User.GetUsername()*/);
+
+            if (user!=null)
+            {
+                return new SettingDto
+                {
+                    ShowName = user.ShowName,
+                    ShowLastLocation = user.ShowLastLocation,
+                    SendNotification = user.SendNotification,
+                    City = user.City,
+                    IHave = (from ihave in user.IHaves select ihave.Value).ToList(),
+                    CanJoin = (from canJoin in user.CanJoins select canJoin.Value).ToList()
+                };
+            }
+            return BadRequest();
+        }
+
         [HttpPost("create-event")]
         public async Task<ActionResult<EventDto>> CreateEvent(EventDto eventDto)
         {
@@ -55,12 +77,15 @@ namespace API.Controllers
 
             currEvent.AppUser = user;
             currEvent.AppUserId = user.Id;
+            currEvent.CanJoins = user.CanJoins;
+            currEvent.IHaves = user.IHaves;
+            currEvent.City = user.City;
 
             user.Events.Add(currEvent);
 
             if(await _unitOfWork.Complete())
             {
-                return Ok(eventDto);
+                return Ok(_mapper.Map<EventDto>(currEvent));
             }
 
             return BadRequest(eventDto);
@@ -70,7 +95,8 @@ namespace API.Controllers
         {
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsyncWithEvent("cagdastest"/*User.GetUsername()*/);
             var events = user.Events
-                             .Select(e => _mapper.Map<EventDto>(e));
+                             .Select(e => _mapper.Map<EventDto>(e))
+                             .ToList();
             return Ok(events);
         }
 

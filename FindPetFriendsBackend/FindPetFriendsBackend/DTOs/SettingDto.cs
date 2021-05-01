@@ -10,6 +10,7 @@ namespace API.DTOs
         public bool ShowName { get; set; }
         public bool ShowLastLocation { get; set; }
         public bool SendNotification { get; set; }
+        public string City { get; set; }
         public ICollection<string> IHave { get; set; }
         public ICollection<string> CanJoin { get; set; }
     }

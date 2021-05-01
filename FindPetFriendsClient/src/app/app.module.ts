@@ -31,6 +31,8 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import { EventsComponent } from './events/events.component';
 import { AgmCoreModule } from '@agm/core';
+import {MatSelectModule} from '@angular/material/select';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import { AgmCoreModule } from '@agm/core';
     MatAutocompleteModule,
     MatButtonModule,
     MatIconModule,
+    MatSelectModule,
     MatDialogModule,
     MatInputModule,
     FormsModule,
@@ -75,6 +78,10 @@ import { AgmCoreModule } from '@agm/core';
     {
       provide: MatDialogRef,
       useValue: {}
+    },
+    {
+      provide : LocationStrategy,
+      useClass : HashLocationStrategy
     }
  ],
   bootstrap: [AppComponent]

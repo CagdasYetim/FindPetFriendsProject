@@ -12,15 +12,23 @@
     </div>
     <h3>Which breeds can join to me</h3>
 
-    <app-pwa-autoinput [label]="'join to me'" [list]="toList" [placeholder]="'join to me '"  (result)="addJoinToMeResults($event)" ></app-pwa-autoinput>
+    <span *ngIf="toList"><app-pwa-autoinput [label]="'join to me'" [list]="toList" [placeholder]="'join to me '"  (result)="addJoinToMeResults($event)" ></app-pwa-autoinput></span>
     <div class="profile__label-contailer">
       <label *ngFor="let join of joinToMeList" (click)="removeJoin(join)" class="profile__label">{{join}}</label>
     </div>
+
+    <mat-form-field appearance="fill">
+      <mat-label>I Live in </mat-label>
+      <mat-select [(value)]="selectedCity">
+        <mat-option *ngFor="let city of cities" [value]="city">
+          {{city}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <div class="profile__save">
       <button type="button"  mat-raised-button color="primary" (click)="saveProfile()" >save</button>
     </div>
   </div>
-
-
 
 </div>

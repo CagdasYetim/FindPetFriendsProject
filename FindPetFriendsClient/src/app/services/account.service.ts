@@ -36,10 +36,6 @@ export class AccountService {
     )
   }
 
-  mock(){
-    return this.http.get('https://localhost:5001/WeatherForecast');
-  }
-
   setCurrentUser(user: User) {
     user.roles = [];
     const roles = this.getDecodedToken(user.token).role;

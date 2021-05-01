@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
     this.setHeader();
 
     this.setDialog();
+
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
           if (confirm("New version available. Load New Version?")) {
@@ -86,10 +87,10 @@ export class AppComponent implements OnInit {
       buttonOkLabel : "create",
       buttonCloseLabel : "cancel",
       inputs : [
-        {label:"Name",mapEnable:false, type : "text",data : ""},
-        {label : "Date",mapEnable:false,type : "datetime-local",data : ""},
-        {label : "From",mapEnable:true,type : "text",data : ""},
-        {label : "To",mapEnable:true,type : "text",data : ""}
+        {label:"Name",mapEnable:false, type : "text",data : "",requestName:"NameOfEvent"},
+        {label : "Date",mapEnable:false,type : "datetime-local",data : "",requestName:"StartDate"},
+        {label : "From",mapEnable:true,type : "text",data : "",requestName:"From"},
+        {label : "To",mapEnable:true,type : "text",data : "",requestName:"To"}
       ]
     };
   }

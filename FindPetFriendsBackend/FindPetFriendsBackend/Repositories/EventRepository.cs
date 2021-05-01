@@ -25,6 +25,8 @@ namespace API.Repositories
         {
             return await _context.Events
                                  .Include(u => u.AppUser)
+                                 .Include(i => i.IHaves)
+                                 .Include(c => c.CanJoins)
                                  .ToListAsync();
         }
 
@@ -70,7 +72,10 @@ namespace API.Repositories
                 }
             }
 
-            var sendList = await filteredEvents.Where(sumPredicates).ToListAsync();
+            var sendList = await filteredEvents.Where(sumPredicates)
+                                               .Include(i=> i.IHaves)
+                                               .Include(c => c.CanJoins)
+                                               .ToListAsync();
 
             return sendList;
         }

@@ -1,7 +1,7 @@
 import { HelperService } from './../helpers/helper.service';
 import { ProfileService } from './../services/profile.service';
 import { FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CheckboxTask } from '../models/checkboxTask';
@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
   control = new FormControl();
   iHaveList : string[] = [];
   joinToMeList : string[]=[];
-  toList: string[] =[] ;
+  toList!: string[] ;
 
 
   imgController!: {
@@ -29,11 +29,18 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private cRef: ChangeDetectorRef
     ) { }
 
   ngOnInit(): void {
-    this.toList = this.helperService.getAllBreeds();
+    this.helperService.getAllBreeds()
+        .subscribe(response => {
+          var breeds : any[] = [];
+          breeds = breeds.concat(response);
+          this.toList=[...breeds];
+        });
+
     this.imgController = {
       src : "../../assets/justExample.jpg",
       height: "10rem",
