@@ -1,3 +1,4 @@
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,7 +15,7 @@ import { RegisterComponent } from './register/register.component';
 import { ErrorPageComponent } from './errors/error-page/error-page.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastComponent } from './toast/toast.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -78,6 +79,11 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     {
       provide: MatDialogRef,
       useValue: {}
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
     },
     {
       provide : LocationStrategy,

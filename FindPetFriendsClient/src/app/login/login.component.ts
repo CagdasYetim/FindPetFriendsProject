@@ -44,12 +44,12 @@ export class LoginComponent implements OnInit {
   login(object:{fieldName:string,fieldValue:string}[]){
     let model :any = {} ;
     object.forEach(item => model[item.fieldName] = item.fieldValue);
-    this.router.navigateByUrl('/events');
-    /* this.accountService.login(model).subscribe(response => {
-      console.log(response);
+
+    this.accountService.login(model).subscribe(response => {
+      this.router.navigateByUrl('/profile');
     }, error => {
       console.log(error);
-    }); */
+    });
   }
 
 }

@@ -67,4 +67,12 @@ export class HomeComponent implements OnInit {
   private pad(d:number) {
     return (d < 10) ? '0' + d.toString() : d.toString();
   }
+
+  public getLat(val :string){
+    return Number.parseFloat( val.split('-')[0]);
+  }
+
+  public getLng(val :string){
+    return Number.parseFloat(val.split('-')[1]);
+  }
 }

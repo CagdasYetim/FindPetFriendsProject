@@ -30,7 +30,13 @@ namespace API.Controllers
         [HttpPost("save-profile-settings")]
         public async Task<ActionResult<SettingDto>> SaveProfileSettings(SettingDto settingDto)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync("cagdastest"/*User.GetUsername()*/);
+            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            
+            if(user == null)
+            {
+                return BadRequest("User is null");
+            }
+            
             await _userService.SaveProfileSetting(user, settingDto);
             
             if(await _unitOfWork.Complete())
@@ -52,7 +58,7 @@ namespace API.Controllers
         [HttpGet("getProfile")]
         public async Task<ActionResult<SettingDto>> getProfile()
         {
-            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync("cagdastest"/*User.GetUsername()*/);
+            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
 
             if (user!=null)
             {
@@ -72,7 +78,13 @@ namespace API.Controllers
         [HttpPost("create-event")]
         public async Task<ActionResult<EventDto>> CreateEvent(EventDto eventDto)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsyncWithEvent("cagdastest"/*User.GetUsername()*/);
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsyncWithEvent(User.GetUsername());
+
+            if(user == null)
+            {
+                return BadRequest("user is null");
+            }
+
             var currEvent = _mapper.Map<Event>(eventDto);
 
             currEvent.AppUser = user;
@@ -93,7 +105,10 @@ namespace API.Controllers
         [HttpGet("my-events")]
         public async Task<ActionResult<IEnumerable<EventDto>>> getMyEvents()
         {
-            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsyncWithEvent("cagdastest"/*User.GetUsername()*/);
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsyncWithEvent(User.GetUsername());
+            if (user == null)
+                return BadRequest();
+
             var events = user.Events
                              .Select(e => _mapper.Map<EventDto>(e))
                              .ToList();
