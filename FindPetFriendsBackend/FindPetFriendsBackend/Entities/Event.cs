@@ -15,8 +15,9 @@ namespace API.Entities
         public string To { get; set; }
         public string City { get; set; }
         public string NameOfEvent { get; set; }
-        public ICollection<IHave> IHaves { get; set; }
-        public ICollection<CanJoin> CanJoins { get; set; }
+        public ICollection<EventIHave> IHaves { get; set; }
+        public ICollection<EventCanJoin> CanJoins { get; set; }
         public DateTime StartDate { get; set; }
+        public ICollection<EventToCome> ToComes { get; set; }
     }
 }

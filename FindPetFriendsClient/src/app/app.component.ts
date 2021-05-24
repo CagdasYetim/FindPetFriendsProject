@@ -1,11 +1,16 @@
-import { EventsService } from './services/events.service';
-import { DialogModel } from './models/dialogModel';
+import { Router } from '@angular/router';
+import { User } from './_models/user';
+import { EventsService } from './_services/events.service';
+import { DialogModel } from './_models/dialogModel';
 import { DialogComponent } from './dialog/dialog.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SwUpdate } from '@angular/service-worker';
+import { HeaderService } from './_services/header.service';
+import { AccountService } from './_services/account.service';
+import { ToastService } from './_services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +22,7 @@ export class AppComponent implements OnInit {
   promptEvent :any;
   items: {name:string,url?:string}[] = [];
   dialogModel !: DialogModel;
-
+  currentUser!: User;
 
  HOME_ICON = `
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
@@ -46,7 +51,11 @@ export class AppComponent implements OnInit {
     sanitizer: DomSanitizer,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<DialogComponent>,
-    public eventsService : EventsService
+    public eventsService : EventsService,
+    public headerService :HeaderService,
+    public accountService : AccountService,
+    private router: Router,
+    private toastService : ToastService
     ){
     window.addEventListener('beforeinstallprompt', event => {
       this.promptEvent = event;
@@ -58,10 +67,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setHeader();
-
     this.setDialog();
-
+    this.setCurrentUser();
     if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
           if (confirm("New version available. Load New Version?")) {
@@ -69,14 +76,12 @@ export class AppComponent implements OnInit {
           }
       });
     }
-  }
-
-  setHeader(): void {
-    this.items.push({name:"HOME",url:""});
-    this.items.push({name:"PROFILE",url:"/profile"});
-    this.items.push({name:"REGISTER",url:"/register"});
-    this.items.push({name:"LOGIN",url:"/login"});
-    this.items.push({name:"EVENTS",url:"/events"});
+    this.toastService.show('You have been successfully registered', {
+      classname: 'bg-success text-light',
+      delay: 2000,
+      autohide: true,
+      headertext: 'Successfully Registered'
+    });
   }
 
   setDialog(){
@@ -110,4 +115,22 @@ export class AppComponent implements OnInit {
     this.promptEvent.prompt();
   }
 
+  Logout(){
+    this.accountService.logout();
+    this.router.navigateByUrl('/login');
+    this.headerService.setHeader(this.headerService.loggedOutItems);
+  }
+
+  setCurrentUser() {
+    var s = localStorage.getItem('user');
+    let user !:User;
+    if(s){
+      user = JSON.parse(s);
+    }
+
+    if (user) {
+      this.accountService.setCurrentUser(user);
+      this.headerService.setHeader(this.headerService.loggedInItems);
+    }
+  }
 }

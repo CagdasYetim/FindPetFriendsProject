@@ -27,7 +27,26 @@ namespace API.Repositories
                                  .Include(u => u.AppUser)
                                  .Include(i => i.IHaves)
                                  .Include(c => c.CanJoins)
+                                 .Include(t => t.ToComes)
                                  .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Event>> GetAllMyEvents(int userId)
+        {
+            return await _context.Events
+                                 .Where(e => e.AppUserId == userId)
+                                 .Include(i => i.IHaves)
+                                 .Include(c => c.CanJoins)
+                                 .Include(t => t.ToComes)
+                                 .ToListAsync();
+        }
+
+        public async Task<Event> GetEventById(int id)
+        {
+            return await _context.Events
+                                 .Where(e => e.Id == id)
+                                 .Include(e => e.ToComes)
+                                 .FirstAsync();
         }
 
         public async Task<IEnumerable<Event>> GetAllEventsWithFilter(EventFilterDto filter)
@@ -75,6 +94,7 @@ namespace API.Repositories
             var sendList = await filteredEvents.Where(sumPredicates)
                                                .Include(i=> i.IHaves)
                                                .Include(c => c.CanJoins)
+                                               .Include(t => t.ToComes)
                                                .ToListAsync();
 
             return sendList;

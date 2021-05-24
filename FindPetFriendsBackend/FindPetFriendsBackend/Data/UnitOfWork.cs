@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using API.Interfaces;
 using API.Repositories;
 using AutoMapper;
-
+using Microsoft.Extensions.Configuration;
 
 namespace API.Data
 {
@@ -10,16 +10,20 @@ namespace API.Data
     {
         private readonly IMapper _mapper;
         private readonly DataContext _context;
-        public UnitOfWork(DataContext context, IMapper mapper)
+        private readonly IConfiguration _configuration;
+
+        public UnitOfWork(DataContext context, IMapper mapper, IConfiguration configuration)
         {
             _context = context;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         public IUserRepository UserRepository => new UserRepository(_context, _mapper);
         public ICitiesRepository CitiesRepository => new CitiesRepository(_context);
         public IBreedsRepository BreedsRepository => new BreedsRepository(_context);
         public IEventRepository EventRepository => new EventRepository(_context, _mapper);
+        public IUserNotificationRepository UserNotificationRepository => new UserNotificationRepository(_context,_configuration);
 
         public async Task<bool> Complete()
         {

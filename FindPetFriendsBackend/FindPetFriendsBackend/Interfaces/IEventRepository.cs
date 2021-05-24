@@ -11,5 +11,7 @@ namespace API.Interfaces
     {
         public Task<IEnumerable<Event>> GetAllEvents();
         public Task<IEnumerable<Event>> GetAllEventsWithFilter(EventFilterDto filter);
+        public Task<IEnumerable<Event>> GetAllMyEvents(int userId);
+        public Task<Event> GetEventById(int id);
     }
 }

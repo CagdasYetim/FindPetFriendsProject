@@ -1,6 +1,6 @@
 // toast.component.ts
 import {Component, TemplateRef} from '@angular/core';
-import {ToastService} from '../services/toast.service';
+import {ToastService} from '../_services/toast.service';
 
 @Component({
   selector: 'app-toasts',
@@ -20,8 +20,11 @@ import {ToastService} from '../services/toast.service';
       <ng-template #text>{{ toast.textOrTpl }}</ng-template>
     </ngb-toast>
   `,
-  host: {'[class.ngb-toasts]': 'true'}
+  host: {
+    '[class.ngb-toasts]': 'true'
+  }
 })
+
 export class ToastComponent {
   constructor(public toastService: ToastService) {}
 

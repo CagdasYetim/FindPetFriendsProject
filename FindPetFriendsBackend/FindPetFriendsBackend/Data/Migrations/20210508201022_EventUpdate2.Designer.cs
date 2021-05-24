@@ -3,15 +3,17 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace FindPetFriendsBackend.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210508201022_EventUpdate2")]
+    partial class EventUpdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -298,26 +300,6 @@ namespace FindPetFriendsBackend.Data.Migrations
                     b.ToTable("EventIHave");
                 });
 
-            modelBuilder.Entity("API.Entities.EventToCome", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("EventToCome");
-                });
-
             modelBuilder.Entity("API.Entities.IHave", b =>
                 {
                     b.Property<int>("Id")
@@ -336,30 +318,6 @@ namespace FindPetFriendsBackend.Data.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("IHave");
-                });
-
-            modelBuilder.Entity("API.Entities.UserNotification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Auth")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Endpoint")
-                        .HasColumnType("text");
-
-                    b.Property<string>("P256dh")
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserNotifications");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -511,17 +469,6 @@ namespace FindPetFriendsBackend.Data.Migrations
                     b.Navigation("Event");
                 });
 
-            modelBuilder.Entity("API.Entities.EventToCome", b =>
-                {
-                    b.HasOne("API.Entities.Event", "Event")
-                        .WithMany("ToComes")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-                });
-
             modelBuilder.Entity("API.Entities.IHave", b =>
                 {
                     b.HasOne("API.Entities.AppUser", "AppUser")
@@ -590,8 +537,6 @@ namespace FindPetFriendsBackend.Data.Migrations
                     b.Navigation("CanJoins");
 
                     b.Navigation("IHaves");
-
-                    b.Navigation("ToComes");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,14 +1,15 @@
-﻿using API.Controllers;
-using API.DTOs;
+﻿using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebPush;
 
 namespace API.Controllers
 {
@@ -89,8 +90,8 @@ namespace API.Controllers
 
             currEvent.AppUser = user;
             currEvent.AppUserId = user.Id;
-            currEvent.CanJoins = user.CanJoins;
-            currEvent.IHaves = user.IHaves;
+            currEvent.CanJoins = user.CanJoins.Select(e => new EventCanJoin { Value = e.Value }).ToList();
+            currEvent.IHaves = user.IHaves.Select(e => new EventIHave { Value = e.Value }).ToList();
             currEvent.City = user.City;
 
             user.Events.Add(currEvent);
@@ -103,16 +104,81 @@ namespace API.Controllers
             return BadRequest(eventDto);
         }
         [HttpGet("my-events")]
-        public async Task<ActionResult<IEnumerable<EventDto>>> getMyEvents()
+        public async Task<ActionResult<IEnumerable<EventDto>>> GetMyEvents()
         {
             var user = await _unitOfWork.UserRepository.GetUserByUserNameAsyncWithEvent(User.GetUsername());
             if (user == null)
                 return BadRequest();
 
+            var events = await _unitOfWork.EventRepository.GetAllMyEvents(user.Id);
+
+            if(events == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(events.Select(e => _mapper.Map<EventDto>(e)).ToList());
+        }
+
+        [HttpDelete("delete-event/{id}")]
+        public async Task<ActionResult<int>> DeleteEvent(int id)
+        {
+            var user = await _unitOfWork.UserRepository.GetUserByUserNameAsyncWithEvent(User.GetUsername());
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            
             var events = user.Events
-                             .Select(e => _mapper.Map<EventDto>(e))
+                             .Where(e => e.Id == id)
                              .ToList();
-            return Ok(events);
+            if(events.Count > 1)
+            {
+                return BadRequest("Id should be uniq");
+            }
+
+            var eventToDelete = events.FirstOrDefault();
+
+            if(eventToDelete == null)
+            {
+                return BadRequest("there is no such a event");
+            }
+
+            user.Events.Remove(eventToDelete);
+            
+            if (await _unitOfWork.Complete())
+            {
+                return Ok(id);
+            }
+
+            return Ok(id);
+        }
+
+        [HttpPost("save-notification")]
+        public async Task<ActionResult> saveNotificationFromUser(NotificationDto notificationDto)
+        {
+            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            if(user == null)
+            {
+                return BadRequest();
+            }
+            var userId = user.Id;
+
+            _unitOfWork.UserNotificationRepository.AddUserNotification(notificationDto, userId);
+
+            if (await _unitOfWork.Complete())
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet("newsletter")]
+        public ActionResult sendNewsletter()
+        {
+            _unitOfWork.UserNotificationRepository.SendNotificationToAll("test","Test it please");
+            return Ok();
         }
 
     }

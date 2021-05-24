@@ -1,7 +1,8 @@
-import { FilterDto } from './../models/filterDto';
-import { EventResponseDto } from './../models/eventResponseDto';
+import { ToComeDto } from './../_models/toComeDto';
+import { FilterDto } from '../_models/filterDto';
+import { EventResponseDto } from '../_models/eventResponseDto';
 import { HttpClient } from '@angular/common/http';
-import { environment } from './../../environments/environment.prod';
+import { environment } from '../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,14 @@ export class EventsService {
 
   public getAllEventsWithFilter(filter : FilterDto){
     return this.http.post<[EventResponseDto]>(this.baseUrl+'Event',filter);
+  }
+
+  public deleteMyEvent(id : number){
+    return this.http.delete<number>(this.baseUrl+`User/delete-event/${id}`);
+  }
+
+  public toComeEvent(model : ToComeDto){
+    return this.http.post(this.baseUrl+'Event/i-come',model);
   }
 
 }

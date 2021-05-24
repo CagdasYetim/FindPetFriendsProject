@@ -1,6 +1,7 @@
-import { FormModel } from './../models/formModel';
-import { ToastService } from './../services/toast.service';
-import { AccountService } from './../services/account.service';
+import { HeaderService } from './../_services/header.service';
+import { FormModel } from '../_models/formModel';
+import { ToastService } from '../_services/toast.service';
+import { AccountService } from '../_services/account.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,7 +18,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private toastService: ToastService,
-    private router: Router) { }
+    private router: Router,
+    private headerService : HeaderService) { }
 
   ngOnInit(): void {
     this.componentController = {
@@ -49,17 +51,19 @@ export class RegisterComponent implements OnInit {
     let model: any = {};
     object.forEach(item => model[item.fieldName] = item.fieldValue);
 
-    this.toastService.show('You have been successfully registered', {
-      classname: 'bg-success text-light',
-      delay: 2000,
-      autohide: true,
-      headertext: 'Successfully Registered'
-    });
-
     this.accountService.register(model)
       .subscribe(
         response => {
+
+          this.toastService.show('You have been successfully registered', {
+            classname: 'bg-success text-light',
+            delay: 2000,
+            autohide: true,
+            headertext: 'Successfully Registered'
+          });
+
           this.router.navigateByUrl('/profile');
+          this.headerService.setHeader(this.headerService.loggedInItems);
         },
         error => {
         });

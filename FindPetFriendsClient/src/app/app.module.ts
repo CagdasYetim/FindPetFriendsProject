@@ -1,4 +1,4 @@
-import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { environment } from './../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
@@ -84,11 +84,11 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
-    },
+    }/* ,
     {
       provide : LocationStrategy,
       useClass : HashLocationStrategy
-    }
+    } */
  ],
   bootstrap: [AppComponent]
 })

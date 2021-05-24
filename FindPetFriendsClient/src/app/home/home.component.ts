@@ -1,6 +1,6 @@
-import { EventResponseDto } from './../models/eventResponseDto';
-import { CartController } from './../models/cartController';
-import { EventsService } from './../services/events.service';
+import { EventResponseDto } from '../_models/eventResponseDto';
+import { CartController } from '../_models/cartController';
+import { EventsService } from '../_services/events.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -14,9 +14,6 @@ export class HomeComponent implements OnInit {
   lng = 7.809007;
 
   cartControllers :CartController[] = [];
-
-  cartController !:CartController;
-
 
   constructor(private eventService:EventsService) { }
 
@@ -54,10 +51,20 @@ export class HomeComponent implements OnInit {
                      Love to have with ${r.canJoinsList}`,
           buttons : [
             {
-              icon : "favorite",
-              buttonMethod : ()=>{console.log("cagdas Yapar olum");}
+              icon : "delete",
+              buttonMethod : ()=>{
+                this.eventService.deleteMyEvent(r.id).subscribe(
+                  response =>{
+                    this.cartControllers = this.cartControllers.filter(obj => obj.id !== r.id);
+                  },
+                  error=>{
+
+                  }
+                );
+              }
             }
-          ]
+          ],
+          id : r.id
         };
         this.cartControllers.push(c);
       }

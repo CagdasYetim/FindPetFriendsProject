@@ -20,5 +20,8 @@ namespace API.DTOs
         public DateTime StartDate { get; set; }
         public ICollection<string> IHavesList { get; set; }
         public ICollection<string> CanJoinsList { get; set; }
+        public int Id { get; set; }
+        public int ToComeCount { get; set; }
+        public bool AmIComing { get; set; }
     }
 }

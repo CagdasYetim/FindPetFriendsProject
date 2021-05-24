@@ -1,10 +1,13 @@
-import { EventResponseDto } from './../models/eventResponseDto';
-import { FilterDto } from './../models/filterDto';
-import { CartController } from './../models/cartController';
-import { EventsService } from './../services/events.service';
-import { HelperService } from './../helpers/helper.service';
+import { ToComeDto } from './../_models/toComeDto';
+import { User } from './../_models/user';
+import { take } from 'rxjs/operators';
+import { AccountService } from './../_services/account.service';
+import { EventResponseDto } from '../_models/eventResponseDto';
+import { FilterDto } from '../_models/filterDto';
+import { CartController } from '../_models/cartController';
+import { EventsService } from '../_services/events.service';
+import { HelperService } from '../_helpers/helper.service';
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-events',
@@ -19,6 +22,7 @@ export class EventsComponent implements OnInit {
   filterShowed : boolean = false;
   date !: Date;
   name !:string;
+  currentUser!: User;
 
   @ViewChild('eventFilter') eventFilter!:ElementRef;
 
@@ -26,10 +30,13 @@ export class EventsComponent implements OnInit {
 
   constructor(
     private helperService: HelperService,
-    private eventService:EventsService
+    private eventService:EventsService,
+    private accountService : AccountService
     ) { }
 
   ngOnInit(): void {
+    this.accountService.currentUser$.pipe(take(1)).subscribe(u => this.currentUser = u);
+
     this.helperService.getAllBreeds()
     .subscribe(response => {
       var breeds : any[] = [];
@@ -104,16 +111,27 @@ export class EventsComponent implements OnInit {
           headerTitle: r.nameOfEvent,
           avatarImage:"../../assets/favicon-96x96.png",
           headerSubTitle : r.city,
-          content : `Date: ${this.pad( date.getDay()+1)}-${this.pad( date.getMonth()+1)}-${this.pad( date.getFullYear())} </br>
+          content : `Date: ${this.pad( date.getDate())}-${this.pad( date.getMonth()+1)}-${this.pad( date.getFullYear())} </br>
                      Time: ${this.pad( date.getUTCHours())}:${this.pad( date.getUTCMinutes())} </br>
                      Start Point : ${fromSplit[0]?.substring(0,5)}-${fromSplit[1]?.substring(0,5)} </br>
                      End Point : ${toSplit[0]?.substring(0,5)}-${toSplit[1]?.substring(0,5)} </br>
                      I have ${r.iHavesList} </br>
-                     Love to have with ${r.canJoinsList}`,
+                     Love to have with ${r.canJoinsList} </br>
+                     ${r.toComeCount} people are coming`,
           buttons : [
             {
               icon : "favorite",
-              buttonMethod : ()=>{console.log("cagdas Yapar olum");}
+              buttonMethod : ()=>{
+                let model : ToComeDto = {eventId:r.id};
+                this.eventService.toComeEvent(model).subscribe(
+                  response =>{
+                    // color change for button
+                  },
+                  error => {
+
+                  }
+                );
+              }
             }
           ],
           from: r.from,

@@ -1,11 +1,14 @@
-import { ProfileDto } from './../models/profileDto';
-import { HelperService } from './../helpers/helper.service';
-import { ProfileService } from './../services/profile.service';
+import { NotificationDto } from './../_models/notificationDto';
+import { NewsletterService } from './../_services/newsletter.service';
+import { SwPush } from '@angular/service-worker';
+import { ProfileDto } from '../_models/profileDto';
+import { HelperService } from '../_helpers/helper.service';
+import { ProfileService } from '../_services/profile.service';
 import { FormControl } from '@angular/forms';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { CheckboxTask } from '../models/checkboxTask';
+import { CheckboxTask } from '../_models/checkboxTask';
 
 @Component({
   selector: 'app-profile',
@@ -21,6 +24,9 @@ export class ProfileComponent implements OnInit {
   myProfileSettings !: ProfileDto;
   cities : string [] = [];
   selectedCity!:string;
+  sub!: PushSubscription;
+
+  readonly VAPID_PUBLIC_KEY = "BPOzSx5jJTYUjB5W7ZzjwxkVSmCLu0pUsyzHvcro3F749ODLk1WjzxSgfRYHes9Tb8sj6qS3nAbToWuhipKnD1o";
 
   imgController!: {
     src: string;
@@ -33,7 +39,9 @@ export class ProfileComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private helperService: HelperService,
-    private cRef: ChangeDetectorRef
+    private cRef: ChangeDetectorRef,
+    private swPush: SwPush,
+    private newsletterService : NewsletterService
     ) {
       this.getProfileInfo();
      }
@@ -128,4 +136,38 @@ export class ProfileComponent implements OnInit {
           }
         );
   }
+
+  subscribeToNotifications() {
+
+    this.swPush.requestSubscription({
+        serverPublicKey: this.VAPID_PUBLIC_KEY
+    })
+    .then(sub => {
+        var model : NotificationDto = {
+          endpoint : sub.endpoint,
+          p256dh :  this.arrayBufferToBase64(sub.getKey("p256dh")),
+          auth : this.arrayBufferToBase64(sub.getKey("auth"))
+        }
+        this.newsletterService.addPushSubscriber(model).subscribe(
+            () => console.log('Sent push subscription object to server.'),
+            err =>  console.log('Could not send subscription object to server, reason: ', err)
+        );
+    })
+    .catch(err => console.error("Could not subscribe to notifications", err));
+
+  }
+
+  arrayBufferToBase64(buffer:ArrayBuffer | null) {
+    if(buffer === null)
+      return '';
+
+    var binary = '';
+    var bytes = new Uint8Array(buffer);
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  }
+
 }
