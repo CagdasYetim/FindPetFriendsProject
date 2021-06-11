@@ -1,3 +1,4 @@
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { environment } from './../environments/environment';
@@ -7,7 +8,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PwaHeaderModule } from '@bit/cagdas.pwaextendedcomponentscollection.pwa-header';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { PwaCartModule } from '@bit/cagdas.pwaextendedcomponentscollection.pwa-cart';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PwaFormModule } from '@bit/cagdas.pwaextendedcomponentscollection.pwa-form';
@@ -71,7 +71,9 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBcFpvV5mW2d5a1qLlo2noOkVQZgzpe4pw'
     }),
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register(environment.serviceWorkerScript, {
+      enabled: environment.production
+    }),
     BrowserAnimationsModule,
     NgbModule
   ],
@@ -84,11 +86,11 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
-    }/* ,
+    } ,
     {
       provide : LocationStrategy,
       useClass : HashLocationStrategy
-    } */
+    }
  ],
   bootstrap: [AppComponent]
 })

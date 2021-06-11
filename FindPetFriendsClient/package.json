@@ -8,6 +8,7 @@
     "build:prod": "ng build --prod",
     "test": "ng test",
     "start:prod": "ng build --prod && cd dist/FindPetFriendsClient && http-server -c-1 .",
+    "start:prodWH": "ng build --prod --output-hashing none && cd dist/FindPetFriendsClient && http-server -c-1 .",
     "start:prod-server": "cd dist/FindPetFriendsClient && http-server -c-1 .",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -32,11 +33,12 @@
     "@bit/cagdas.pwaextendedcomponentscollection.pwa-checkboxes": "^1.1.7",
     "@bit/cagdas.pwaextendedcomponentscollection.pwa-floatbutton": "^1.1.10",
     "@bit/cagdas.pwaextendedcomponentscollection.pwa-form": "^1.1.2",
-    "@bit/cagdas.pwaextendedcomponentscollection.pwa-header": "^1.1.0",
+    "@bit/cagdas.pwaextendedcomponentscollection.pwa-header": "^1.1.12",
     "@bit/cagdas.pwaextendedcomponentscollection.pwa-image": "^1.1.4",
     "@ng-bootstrap/ng-bootstrap": "^9.1.0",
     "@types/googlemaps": "^3.43.3",
     "bootstrap": "^4.5.0",
+    "idb": "^6.1.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

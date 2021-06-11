@@ -1,3 +1,4 @@
+import { IdbService } from './../_services/idb.service';
 import { ToComeDto } from './../_models/toComeDto';
 import { User } from './../_models/user';
 import { take } from 'rxjs/operators';
@@ -31,7 +32,8 @@ export class EventsComponent implements OnInit {
   constructor(
     private helperService: HelperService,
     private eventService:EventsService,
-    private accountService : AccountService
+    private accountService : AccountService,
+    private idbService : IdbService
     ) { }
 
   ngOnInit(): void {
@@ -96,14 +98,15 @@ export class EventsComponent implements OnInit {
             this.mapResponse(response);
           },
           error => {
-
+            this.idbService.getEvents().then(events => {this.mapResponse(events)});
           }
         );
   }
 
   private mapResponse(eventResponseDto: EventResponseDto[]):void{
     eventResponseDto.forEach(
-      r =>{
+      (r,i) =>{
+        this.idbService.addEvent(r,i);
         var fromSplit = r.from.split('-');
         var toSplit = r.to.split('-');
         var date = new Date(r.startDate);
@@ -152,6 +155,12 @@ export class EventsComponent implements OnInit {
 
   public getLng(val :string){
     return Number.parseFloat(val.split('-')[1]);
+  }
+  /*Testing purpose */
+  private backgroundSync() {
+    navigator.serviceWorker.ready
+      .then((swRegistration) => swRegistration.sync.register('event-data'))
+      .catch(console.log);
   }
 
 }

@@ -3,10 +3,12 @@
   "assetGroups": [{
     "name": "app",
     "installMode": "prefetch",
+    "updateMode": "prefetch",
     "resources": {
       "files": [
-        "/favicon.ico",
         "/index.html",
+        "/manifest.json",
+        "/ngsw.json",
         "/*.css",
         "/*.js"
       ]
@@ -14,14 +16,39 @@
   },
   {
     "name": "assets",
+    "installMode": "prefetch",
+    "updateMode": "prefetch",
+    "resources": {
+      "files": [
+        "/favicon.ico",
+        "/assets/**"
+      ]
+    }
+  },
+  {
+    "name": "fonts",
+    "installMode": "prefetch",
+    "updateMode": "prefetch",
+    "resources": {
+      "urls": [
+        "https://fonts.gstatic.com",
+        "https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap",
+        "https://fonts.googleapis.com/icon?family=Material+Icons"
+      ]
+    }
+  },
+  {
+    "name": "extra assets",
     "installMode": "lazy",
     "updateMode": "prefetch",
     "resources": {
       "files": [
-        "/assets/**"
+        "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
       ]
     }
-  }],
+  }
+
+],
   "dataGroups": [
     {
       "name": "Breeds",
@@ -30,7 +57,7 @@
       ],
       "cacheConfig": {
         "strategy": "performance",
-        "timeout":"10s",
+        "timeout":"2s",
         "maxAge": "1d",
         "maxSize": 100
       }
@@ -42,7 +69,7 @@
       ],
       "cacheConfig": {
         "strategy": "performance",
-        "timeout":"10s",
+        "timeout":"2s",
         "maxAge": "1d",
         "maxSize": 100
       }
@@ -54,7 +81,19 @@
       ],
       "cacheConfig": {
         "strategy": "freshness",
-        "timeout":"10s",
+        "timeout":"2s30u",
+        "maxAge": "1d",
+        "maxSize": 100
+      }
+    },
+    {
+      "name" : "My Events",
+      "urls": [
+        "/api/User/my-events"
+      ],
+      "cacheConfig" : {
+        "strategy": "freshness",
+        "timeout":"2s30u",
         "maxAge": "1d",
         "maxSize": 100
       }

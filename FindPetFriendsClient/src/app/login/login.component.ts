@@ -1,3 +1,4 @@
+import { ToastService } from './../_services/toast.service';
 import { Router } from '@angular/router';
 import { FormModel } from '../_models/formModel';
 import { AccountService } from '../_services/account.service';
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private router: Router,
-    private headerService : HeaderService
+    private headerService : HeaderService,
+    private toastService :ToastService
   ) { }
 
   ngOnInit(): void {
@@ -54,8 +56,19 @@ export class LoginComponent implements OnInit {
       response => {
         this.router.navigateByUrl('/profile');
         this.headerService.setHeader(this.headerService.loggedInItems);
+        this.toastService.show('Login', {
+          classname: 'bg-success text-light',
+          delay: 2000,
+          autohide: true,
+          headertext: 'Successfully Logged in'
+        });
       }, error => {
-        console.log(error);
+        this.toastService.show('Login', {
+          classname: 'bg-danger text-light',
+          delay: 2000,
+          autohide: true,
+          headertext: 'because of som reason you could not log in'
+        });
       });
   }
 

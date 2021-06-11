@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  serviceWorkerScript: 'sw.js',
   apiUrl: 'https://localhost:5001/api/',
   hubUrl: 'https://localhost:5001/hubs/'
 };

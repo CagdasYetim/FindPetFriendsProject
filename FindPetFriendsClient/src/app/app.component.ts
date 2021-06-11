@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SwUpdate } from '@angular/service-worker';
+/* import { SwUpdate } from '@angular/service-worker'; */
 import { HeaderService } from './_services/header.service';
 import { AccountService } from './_services/account.service';
 import { ToastService } from './_services/toast.service';
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
   `;
 
   constructor(
-    private swUpdate : SwUpdate,
+    /* private swUpdate : SwUpdate, */
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     public dialog: MatDialog,
@@ -69,19 +69,19 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.setDialog();
     this.setCurrentUser();
-    if (this.swUpdate.isEnabled) {
+    /* if (this.swUpdate.isEnabled) {
       this.swUpdate.available.subscribe(() => {
           if (confirm("New version available. Load New Version?")) {
               window.location.reload();
           }
       });
-    }
-    this.toastService.show('You have been successfully registered', {
+    } */
+    /* this.toastService.show('You have been successfully registered', {
       classname: 'bg-success text-light',
       delay: 2000,
       autohide: true,
       headertext: 'Successfully Registered'
-    });
+    }); */
   }
 
   setDialog(){
@@ -119,6 +119,12 @@ export class AppComponent implements OnInit {
     this.accountService.logout();
     this.router.navigateByUrl('/login');
     this.headerService.setHeader(this.headerService.loggedOutItems);
+    this.toastService.show('You have been successfully logged out', {
+      classname: 'bg-success text-light',
+      delay: 2000,
+      autohide: true,
+      headertext: 'Successfully you logged out'
+    });
   }
 
   setCurrentUser() {

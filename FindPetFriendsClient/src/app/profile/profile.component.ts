@@ -143,6 +143,7 @@ export class ProfileComponent implements OnInit {
         serverPublicKey: this.VAPID_PUBLIC_KEY
     })
     .then(sub => {
+      console.log('i am there');
         var model : NotificationDto = {
           endpoint : sub.endpoint,
           p256dh :  this.arrayBufferToBase64(sub.getKey("p256dh")),

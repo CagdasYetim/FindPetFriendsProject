@@ -1,3 +1,4 @@
+import { IdbService } from './../_services/idb.service';
 import { EventResponseDto } from '../_models/eventResponseDto';
 import { CartController } from '../_models/cartController';
 import { EventsService } from '../_services/events.service';
@@ -10,12 +11,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  lat = 51.678418;
-  lng = 7.809007;
-
   cartControllers :CartController[] = [];
 
-  constructor(private eventService:EventsService) { }
+  constructor(
+    private eventService:EventsService
+  ){ }
 
   ngOnInit(): void {
     this.getMyEvents();
