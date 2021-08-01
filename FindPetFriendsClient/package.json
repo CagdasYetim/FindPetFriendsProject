@@ -8,8 +8,9 @@
     "build:prod": "ng build --prod",
     "test": "ng test",
     "start:prod": "ng build --prod && cd dist/FindPetFriendsClient && http-server -c-1 .",
-    "start:prodWH": "ng build --prod --output-hashing none && cd dist/FindPetFriendsClient && http-server -c-1 .",
-    "start:prod-server": "cd dist/FindPetFriendsClient && http-server -c-1 .",
+    "start:prod-server": "cd dist/FindPetFriendsClient && http-server -p 8080 -c-1 .",
+    "start:prod-server-withoutPWA" : "cd dist-withoutpwa && http-server -p 8000 -c-1 .",
+    "start:prod-WithoutPWA": "ng build --prod --output-path dist-withoutpwa && rimraf dist-withoutpwa/manifest.json dist-withoutpwa/ngsw.json dist-withoutpwa/ngsw-worker.js dist-withoutpwa/ngsw.json dist-withoutpwa/sw-master.js dist-withoutpwa/sw.js dist-withoutpwa/worker-basic.min.js && cd dist-withoutpwa && http-server -p 8000 -c-1 .",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
