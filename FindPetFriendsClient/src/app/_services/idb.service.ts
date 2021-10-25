@@ -8,7 +8,7 @@ import { openDB } from 'idb';
 })
 export class IdbService {
 
-  private version:string = '2.6';
+  private version:string = '2.7';
   private dbName:string = 'pwa-db';
 
   constructor() {
@@ -27,6 +27,24 @@ export class IdbService {
   async addEvent(event:EventResponseDto,i:number){
     var db = await this.createDb();
     await db.put('Event',event,i);
+  }
+
+  async clearEventStore(){
+    var db = await this.createDb();
+    var tx = db.transaction('Event', 'readwrite');
+    var events = tx.objectStore('Event');
+    events.clear()
+      .then(
+        () =>{
+          console.log("events are cleared");
+        }
+      )
+      .catch(
+        ()=>{
+          console.log("events could not cleared");
+        }
+      )
+      ;
   }
 
   async getEvents(){

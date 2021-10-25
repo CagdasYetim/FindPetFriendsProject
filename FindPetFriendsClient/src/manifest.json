@@ -4,7 +4,7 @@
   "name": "Find Pet Friends",
   "scope": "/",
   "display": "fullscreen",
-  "start_url": "http://localhost:8080/",
+  "start_url": "http://localhost:8080/#/",
   "short_name": "FindPetFriends",
   "theme_color": "#d68533",
   "description": "manifest to my application",
@@ -12,6 +12,22 @@
   "background_color": "#ffffff",
   "related_applications": [],
   "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "See My Events",
+      "short_name": "My Events",
+      "description": "View my Events",
+      "url": "/#/home",
+      "icons": [{ "src": "/assets/android-icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "See all Events from Users",
+      "short_name": "New Events",
+      "description": "View All Events",
+      "url": "/#/events",
+      "icons": [{ "src": "/assets/android-icon-192x192.png", "sizes": "192x192" }]
+    }
+  ],
   "icons": [
     {
       "src": "/favicon.ico",
@@ -64,7 +80,7 @@
       "src": "/assets/android-icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ]
 }

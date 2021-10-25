@@ -92,15 +92,26 @@ export class EventsComponent implements OnInit {
       withBreeds:this.toFilterList.length<1 ?undefined :this.toFilterList
     }
 
-    this.eventService.getAllEventsWithFilter(filter)
+    var eventSubscription = this.eventService.getAllEventsWithFilter(filter)
         .subscribe(
           response => {
-            this.mapResponse(response);
-          },
-          error => {
-            this.idbService.getEvents().then(events => {this.mapResponse(events)});
+            this.idbService.clearEventStore();
+            this.setEventResponseToDB(response);
           }
         );
+
+    setTimeout(() => {
+      eventSubscription.unsubscribe();
+      this.idbService.getEvents().then(events => {this.mapResponse(events)});
+    }, 2000);
+  }
+
+  private setEventResponseToDB(eventResponseDto: EventResponseDto[]):void{
+    eventResponseDto.forEach(
+      (r,i) =>{
+        this.idbService.addEvent(r,i);
+      }
+    );
   }
 
   private mapResponse(eventResponseDto: EventResponseDto[]):void{
