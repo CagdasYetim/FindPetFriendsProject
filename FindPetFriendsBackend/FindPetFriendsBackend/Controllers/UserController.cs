@@ -177,7 +177,7 @@ namespace API.Controllers
         [HttpGet("newsletter")]
         public ActionResult sendNewsletter()
         {
-            _unitOfWork.UserNotificationRepository.SendNotificationToAll("test","Test it please");
+            _unitOfWork.UserNotificationRepository.SendNotificationToAll("newsletter","you got newsletter notification");
             return Ok();
         }
 
