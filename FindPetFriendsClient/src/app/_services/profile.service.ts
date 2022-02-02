@@ -18,7 +18,7 @@ export class ProfileService {
     private http: HttpClient,
     private toastService : ToastService,
     private accountService: AccountService,
-    private idbService:IdbService,
+    private idbService:IdbService
     ){ }
 
   saveProfileSettings(model :{}){

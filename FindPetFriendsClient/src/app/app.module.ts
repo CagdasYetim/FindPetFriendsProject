@@ -71,6 +71,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBcFpvV5mW2d5a1qLlo2noOkVQZgzpe4pw'
     }),
+    /* Remove ServiceWorkerModule for normal Website Build */
     ServiceWorkerModule.register(environment.serviceWorkerScript, {
       enabled: environment.production
     }),

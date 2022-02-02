@@ -39,9 +39,6 @@ function syncData(db){
 function fetchAllRequests(eventRequests,profileRequests){
   eventRequests.onsuccess = () => {
     eventRequests.result.forEach( (element,index) => {
-      console.log(element.model);
-      console.log(element.path);
-      console.log(index);
       var data = element.model;
       var token = element.token;
 
@@ -65,9 +62,6 @@ function fetchAllRequests(eventRequests,profileRequests){
 
   profileRequests.onsuccess = () => {
     profileRequests.result.forEach( (element,index) => {
-      console.log(element.model);
-      console.log(element.path);
-      console.log(index);
       var data = element.model;
       var token = element.token;
 
@@ -88,7 +82,6 @@ function fetchAllRequests(eventRequests,profileRequests){
       });
     });
   };
-
 }
 
 function clearDbPosts(){

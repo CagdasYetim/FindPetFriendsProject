@@ -57,7 +57,7 @@
       ],
       "cacheConfig": {
         "strategy": "performance",
-        "timeout":"2s",
+        "timeout":"10u",
         "maxAge": "1d",
         "maxSize": 100
       }
@@ -65,11 +65,11 @@
     {
       "name": "Cities Of Austria",
       "urls": [
-        "/api/Cities/all"
+        "/api/Cities/all/AT"
       ],
       "cacheConfig": {
         "strategy": "performance",
-        "timeout":"2s",
+        "timeout":"10u",
         "maxAge": "1d",
         "maxSize": 100
       }
@@ -81,7 +81,7 @@
       ],
       "cacheConfig": {
         "strategy": "freshness",
-        "timeout":"2s30u",
+        "timeout":"30u",
         "maxAge": "1d",
         "maxSize": 100
       }
@@ -93,7 +93,7 @@
       ],
       "cacheConfig" : {
         "strategy": "freshness",
-        "timeout":"2s30u",
+        "timeout":"30u",
         "maxAge": "1d",
         "maxSize": 100
       }

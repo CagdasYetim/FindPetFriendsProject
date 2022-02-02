@@ -83,7 +83,7 @@ export class EventsComponent implements OnInit {
     this.filterShowed = !this.filterShowed;
   }
 
-  getFilteredEvents():void{
+   getFilteredEvents():void{
     this.cartControllers = [];
     var filter :FilterDto = {
       nameOfEvent : this.name?this.name:undefined,
@@ -92,6 +92,16 @@ export class EventsComponent implements OnInit {
       withBreeds:this.toFilterList.length<1 ?undefined :this.toFilterList
     }
 
+    //Normal Website
+    /*
+    this.eventService.getAllEventsWithFilter(filter)
+        .subscribe(
+          response => {
+            this.idbService.clearEventStore();
+            this.mapResponse(response)
+          }
+        );
+     */
     var eventSubscription = this.eventService.getAllEventsWithFilter(filter)
         .subscribe(
           response => {
@@ -103,7 +113,16 @@ export class EventsComponent implements OnInit {
     setTimeout(() => {
       eventSubscription.unsubscribe();
       this.idbService.getEvents().then(events => {this.mapResponse(events)});
-    }, 2000);
+
+      this.eventService.getAllEventsWithFilter(filter)
+        .subscribe(
+          response => {
+            this.idbService.clearEventStore();
+            this.setEventResponseToDB(response);
+          }
+        );
+
+    }, 500);
   }
 
   private setEventResponseToDB(eventResponseDto: EventResponseDto[]):void{

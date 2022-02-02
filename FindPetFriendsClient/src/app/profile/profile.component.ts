@@ -40,15 +40,15 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private helperService: HelperService,
     private cRef: ChangeDetectorRef,
+    /* Remove SwPush for normal Website Build */
     private swPush: SwPush,
     private newsletterService : NewsletterService
-    ) {
-      this.getProfileInfo();
-     }
+    ){}
 
   ngOnInit(): void {
+    this.getProfileInfo();
     this.imgController = {
-      src : "../../assets/justExample.jpg",
+      src : "../../assets/favicon-96x96.png",
       height: "10rem",
       width : "auto"
     };
@@ -137,13 +137,12 @@ export class ProfileComponent implements OnInit {
         );
   }
 
+  /** Remove it for Normal Website Build */
   subscribeToNotifications() {
-
     this.swPush.requestSubscription({
         serverPublicKey: this.VAPID_PUBLIC_KEY
     })
     .then(sub => {
-      console.log('i am there');
         var model : NotificationDto = {
           endpoint : sub.endpoint,
           p256dh :  this.arrayBufferToBase64(sub.getKey("p256dh")),
@@ -155,7 +154,6 @@ export class ProfileComponent implements OnInit {
         );
     })
     .catch(err => console.error("Could not subscribe to notifications", err));
-
   }
 
   arrayBufferToBase64(buffer:ArrayBuffer | null) {
