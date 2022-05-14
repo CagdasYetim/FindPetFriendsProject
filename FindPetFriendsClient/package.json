@@ -16,7 +16,6 @@
   },
   "private": true,
   "dependencies": {
-    "@agm/core": "^1.1.0",
     "@angular/animations": "~11.0.1",
     "@angular/cdk": "~11.2.4-sha-e54d6d8ee",
     "@angular/common": "~11.0.1",
