@@ -35,7 +35,7 @@
     "@bit/cagdas.pwaextendedcomponentscollection.pwa-form": "^1.1.2",
     "@bit/cagdas.pwaextendedcomponentscollection.pwa-header": "^1.1.12",
     "@bit/cagdas.pwaextendedcomponentscollection.pwa-image": "^1.1.4",
-    "@ng-bootstrap/ng-bootstrap": "^9.1.0",
+    "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "@types/googlemaps": "^3.43.3",
     "bootstrap": "^4.5.0",
     "idb": "^6.1.2",
