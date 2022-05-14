@@ -113,7 +113,6 @@ export class EventsComponent implements OnInit {
     setTimeout(() => {
       eventSubscription.unsubscribe();
       this.idbService.getEvents().then(events => {this.mapResponse(events)});
-
       this.eventService.getAllEventsWithFilter(filter)
         .subscribe(
           response => {
@@ -121,7 +120,6 @@ export class EventsComponent implements OnInit {
             this.setEventResponseToDB(response);
           }
         );
-
     }, 500);
   }
 
